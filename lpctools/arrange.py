@@ -701,7 +701,6 @@ def load_images(image_paths, pattern=IMAGE_FRAME_PATTERN,
 		pattern = pattern.pattern
 	if verbose: print(f"Searching pattern '{pattern}'")
 
-
 	# if the pattern contains a path separator, apply the pattern to the full image path
 	# otherwise, only apply the basename
 	if not os.path.sep in pattern:
@@ -719,6 +718,13 @@ def load_images(image_paths, pattern=IMAGE_FRAME_PATTERN,
 
 		id = m.groupdict()
 
+		# clean directory for direction
+		paths = id['d'].split('\\')
+		for dir in paths:
+			if dir in ['n','w','s','e']:
+				id['d'] = dir
+				break
+
 		# if regex contains named capture group "frames", it means the
 		# filename refers to multiple frames, e.g. e-cast1-shoot.png, etc.
 		if 'frames' in id and id['frames'] is not None:
@@ -735,7 +741,6 @@ def load_images(image_paths, pattern=IMAGE_FRAME_PATTERN,
 					images[afi] = Image.open(path)
 					if verbose: print(f"  - FOUND {frame} = {path} --> {afi}")
 			continue
-
 
 		afi = AnimationFrameID.from_dict(id)
 		images[afi] = Image.open(path)
