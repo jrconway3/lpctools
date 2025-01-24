@@ -217,7 +217,6 @@ animations = {
 	'idle': Animation.make_directions('idle',2),
 	'jump': Animation.make_directions('jump',5),
 	'run': Animation.make_directions('run',8),
-	'run-r': Animation.make_directions('run-r',8),
 	'sit': Animation.make_directions('sit',3),
 	'emote': Animation.make_directions('emote',3),
 	'combat_idle': Animation.make_directions('combat_idle',2),
