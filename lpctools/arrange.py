@@ -225,7 +225,7 @@ animations = {
 }
 
 animation_synonyms = {
-	'spellcast':'cast',
+	'cast':'spellcast',
 	'magic':'cast',
 	'swing':'slash'
 }
