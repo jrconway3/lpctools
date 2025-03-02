@@ -843,7 +843,7 @@ def pack_animations(image_paths, layout, output=None, pattern=IMAGE_FRAME_PATTER
 	return img
 
 def main_pack(args):
-	return pack_animations(args.images, args.layout, args.output, args.pattern)
+	return pack_animations(args.input, args.layout, args.output, args.pattern)
 
 def unpack_animations(image, layout, pattern=IMAGE_FRAME_PATTERN, output_dir='.', verbose=False):
 	img = Image.open(image)
