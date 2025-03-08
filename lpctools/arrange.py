@@ -661,12 +661,6 @@ layouts = {
 			('run' , 's' , range(8)), 
 			('run' , 'e' , range(8))
 		]),
-	#'sit': SpritesheetLayout.from_rows([
-	#		[('sit-ground' , 'n' , 0), ('sit-cross' , 'n' , 1), ('sit-chair' , 'n' , 2)],
-	#		[('sit-ground' , 'w' , 0), ('sit-cross' , 'w' , 1), ('sit-chair' , 'w' , 2)],
-	#		[('sit-ground' , 's' , 0), ('sit-cross' , 's' , 1), ('sit-chair' , 's' , 2)],
-	#		[('sit-ground' , 'e' , 0), ('sit-cross' , 'e' , 1), ('sit-chair' , 'e' , 2)],
-	#	]),
 	'sit': SpritesheetLayout.from_animation('sit', 3),
 	'cast': SpritesheetLayout.from_animation('cast',7),
 	'thrust': SpritesheetLayout.from_animation('thrust',8),
