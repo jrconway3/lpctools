@@ -162,6 +162,19 @@ class TestLayout():
 		layout_builtin.to_image(str(tmpdir / 'universal.png'))
 		assert filecmp.cmp(str(tmpdir / 'universal.png'), 'tests/arrange_files/layout/universal.png')
 
+	def test_convert_layout_expanded(self, tmpdir):
+		import lpctools.arrange
+
+		layout_from_json = lpctools.arrange.load_layout('tests/arrange_files/layout/universal-expanded.json')
+		layout_builtin = lpctools.arrange.load_layout('universal-expanded')
+		assert layout_from_json == layout_builtin
+
+		layout_builtin.to_json(tmpdir / 'universal-expanded.json')
+		assert filecmp.cmp(str(tmpdir / 'universal-expanded.json'), 'tests/arrange_files/layout/universal-expanded.json')
+
+		layout_builtin.to_image(str(tmpdir / 'universal-expanded.png'))
+		assert filecmp.cmp(str(tmpdir / 'universal-expanded.png'), 'tests/arrange_files/layout/universal-expanded.png')
+
 
 class TestDistribute():
 	def test_image_regexs(self):
@@ -256,6 +269,45 @@ class TestDistribute():
 			output = outfile)
 
 		assert filecmp.cmp(outfile, 'tests/arrange_files/hair/hair_shoulderr.png')
+
+	def test_distribute_hair_expanded(self, tmpdir):
+		import lpctools.arrange
+
+		# test with list of files as input
+		outfile = str(tmpdir / 'hair_plain_expanded.png')
+		out = lpctools.arrange.distribute(
+			image_paths = [glob('tests/arrange_files/hair/hair_plain/*.png')],
+			offsets_image = 'tests/arrange_files/hair/reference_points_expanded.png', 
+			masks_image = 'tests/arrange_files/hair/masks_male_expanded.png',  
+			layout = 'universal-expanded', 
+			output = outfile)
+
+		assert_images_equal(outfile, 'tests/arrange_files/hair/hair_plain_expanded.png')
+
+		# test with multiple directories as input
+		# outfiles = ['tests/arrange_files/hair/hair_page2_expanded.png', 'tests/arrange_files/hair/hair_shortknot_expanded.png']
+		outfiles = [str(tmpdir / 'hair_page2_expanded.png'), str(tmpdir / 'hair_shortknot_expanded.png')]
+		out = lpctools.arrange.distribute(
+			image_paths = ['tests/arrange_files/hair/hair_page2', 'tests/arrange_files/hair/hair_shortknot'],
+			offsets_image = 'tests/arrange_files/hair/reference_points_expanded.png', 
+			masks_image = 'tests/arrange_files/hair/masks_male_expanded.png',
+			layout = 'universal-expanded', 
+			output = outfiles)
+
+		assert filecmp.cmp(outfiles[0], 'tests/arrange_files/hair/hair_page2_expanded.png')
+		assert filecmp.cmp(outfiles[1], 'tests/arrange_files/hair/hair_shortknot_expanded.png')
+
+		# test with multiple layers
+		outfile = str(tmpdir / 'hair_shoulderr_expanded.png')
+		# outfile = 'tests/arrange_files/hair/hair_shoulderr_expanded.png' #str(tmpdir / 'hair_shoulderr_expanded.png')
+		out = lpctools.arrange.distribute(
+			image_paths = [glob('tests/arrange_files/hair/hair_shoulderr/*.png')],
+			offsets_image = 'tests/arrange_files/hair/reference_points_expanded.png', 
+			masks_image = 'tests/arrange_files/hair/masks_male_expanded.png',  
+			layout = 'universal-expanded', 
+			output = outfile)
+
+		assert filecmp.cmp(outfile, 'tests/arrange_files/hair/hair_shoulderr_expanded.png')
 
 	def test_distribute_shield(self, tmpdir):
 		import lpctools.arrange
